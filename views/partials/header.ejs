@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+</head>
+
+<body>
+    <header>
+        <h1>Student Management System</h1>
+        <% if (isAuthenticated) { %>
+            <nav>
+                <a href="/dashboard">Dashboard</a>
+                <% if (session.role==='dosen' ) { %>
+                    <a href="/add">Tambah Mahasiswa</a>
+                    <% } %>
+                        <a href="/logout">Logout</a>
+            </nav>
+            <% } %>
+    </header>
+    <main>
+        <% if (flash.error && flash.error.length> 0) { %>
+            <div class="flash error">
+                <ul>
+                    <% flash.error.forEach(function(message){ %>
+                        <li>
+                            <%= message %>
+                        </li>
+                        <% }) %>
+                </ul>
+            </div>
+            <% } %>
+                <% if (flash.success && flash.success.length> 0) { %>
+                    <div class="flash success">
+                        <ul>
+                            <% flash.success.forEach(function(message){ %>
+                                <li>
+                                    <%= message %>
+                                </li>
+                                <% }) %>
+                        </ul>
+                    </div>
+                    <% } %>

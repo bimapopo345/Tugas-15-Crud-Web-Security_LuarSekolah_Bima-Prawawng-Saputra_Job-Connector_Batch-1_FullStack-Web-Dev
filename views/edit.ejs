@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+
+    <h2>Edit Mahasiswa</h2>
+    <form action="/edit/<%= student.id %>" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div>
+            <label for="name">Nama:</label>
+            <input type="text" name="name" id="name" value="<%= student.name %>" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value="<%= student.email %>" required>
+        </div>
+        <div>
+            <label for="phone">Telepon:</label>
+            <input type="text" name="phone" id="phone" value="<%= student.phone %>">
+        </div>
+        <div>
+            <label for="address">Alamat:</label>
+            <textarea name="address" id="address"><%= student.address %></textarea>
+        </div>
+        <div>
+            <label for="photo">Foto:</label>
+            <% if (student.photo) { %>
+                <img src="/uploads/<%= student.photo %>" alt="Foto" width="100"><br>
+                <% } else { %>
+                    <p>No Photo</p>
+                    <% } %>
+                        <input type="file" name="photo" id="photo" accept="image/*">
+        </div>
+        <button type="submit">Perbarui Mahasiswa</button>
+    </form>
+
+    <%- include('partials/footer') %>

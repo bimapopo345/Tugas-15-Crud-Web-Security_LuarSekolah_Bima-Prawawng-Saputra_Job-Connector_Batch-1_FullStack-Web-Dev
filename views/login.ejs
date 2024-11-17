@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <!-- CAPTCHA Sederhana -->
+        <div>
+            <label for="captcha">Apa hasil dari 3 + 4?</label>
+            <input type="text" name="captcha" id="captcha" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        // Validasi CAPTCHA di Frontend
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function (e) {
+            const captcha = document.getElementById('captcha').value;
+            if (captcha !== '7') {
+                e.preventDefault();
+                alert('Captcha salah. Silakan coba lagi.');
+            }
+        });
+    </script>
+
+    <%- include('partials/footer') %>

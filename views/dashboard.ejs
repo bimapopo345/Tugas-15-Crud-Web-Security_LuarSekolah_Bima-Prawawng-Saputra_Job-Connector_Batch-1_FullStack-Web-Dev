@@ -1,0 +1,79 @@
+<%- include('partials/header') %>
+
+    <h2>Dashboard</h2>
+
+    <% if (session.role==='dosen' ) { %>
+        <a href="/add">Tambah Mahasiswa</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Telepon</th>
+                    <th>Alamat</th>
+                    <th>Foto</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% students.forEach(function(student){ %>
+                    <tr>
+                        <td>
+                            <%= student.name %>
+                        </td>
+                        <td>
+                            <%= student.email %>
+                        </td>
+                        <td>
+                            <%= student.phone %>
+                        </td>
+                        <td>
+                            <%= student.address %>
+                        </td>
+                        <td>
+                            <% if (student.photo) { %>
+                                <img src="/uploads/<%= student.photo %>" alt="Foto" width="50">
+                                <% } else { %>
+                                    N/A
+                                    <% } %>
+                        </td>
+                        <td>
+                            <a href="/edit/<%= student.id %>">Edit</a>
+                            <form action="/delete/<%= student.id %>" method="POST" style="display:inline;">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit"
+                                    onclick="return confirm('Apakah Anda yakin ingin menghapus mahasiswa ini?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+        <% } else { %>
+            <% if (student) { %>
+                <div>
+                    <% if (student.photo) { %>
+                        <img src="/uploads/<%= student.photo %>" alt="Foto" width="100">
+                        <% } else { %>
+                            <p>No Photo</p>
+                            <% } %>
+                </div>
+                <p><strong>Nama:</strong>
+                    <%= student.name %>
+                </p>
+                <p><strong>Email:</strong>
+                    <%= student.email %>
+                </p>
+                <p><strong>Telepon:</strong>
+                    <%= student.phone %>
+                </p>
+                <p><strong>Alamat:</strong>
+                    <%= student.address %>
+                </p>
+                <a href="/edit/<%= student.id %>">Edit Profil</a>
+                <% } else { %>
+                    <p>Data mahasiswa tidak ditemukan.</p>
+                    <% } %>
+                        <% } %>
+
+                            <%- include('partials/footer') %>
